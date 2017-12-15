@@ -48,19 +48,19 @@ class App extends Component {
     }
 
     const content = {
-      // 1: {
-      //   content: "Good for you",
-      //   conditions: [
-      //     {
-      //       q:2,
-      //       a:1
-      //     },
-      //     {
-      //       q:3,
-      //       a:2
-      //     }
-      //   ]
-      // },
+      1: {
+        content: "Good for you",
+        conditions: [
+          {
+            q:2,
+            a:1
+          },
+          {
+            q:3,
+            a:2
+          }
+        ]
+      },
       2: {
         content: "You poor boy",
         conditions: [
@@ -84,11 +84,13 @@ class App extends Component {
         </header>
         <form>
           {Object.keys(questionsSet).map((questionID) => {
-            const condition = questionsSet[questionID].condition
-            if(!condition || condition.a === this.state[condition.q])
-              return(
-                <Question id={questionID} question={questionsSet[questionID]} callback={this.handleChangeInParent}/>
-              );
+              const condition = questionsSet[questionID].condition
+              if(!condition || condition.a === this.state[condition.q]){
+                return(
+                  <Question key={questionID} id={questionID} question={questionsSet[questionID]} callback={this.handleChangeInParent}/>
+                );
+              }
+              return null;
             }
           )}
 
@@ -98,30 +100,13 @@ class App extends Component {
               const condition = conditions[i]
               if(condition.a === this.state[condition.q]){
                 return(
-                  <p>{content[contentID].content}</p>
+                  <p key={contentID}>{content[contentID].content}</p>
                 );
                 }
               }
+              return null;
             }
           )}
-          
-        {/* <h3>Q1</h3>
-        <label>Yes<input type='radio' name='Q1' value='yes' onChange={this.handleChange} /></label>
-        <label>No<input type='radio' name='Q1' value='no' onChange={this.handleChange} /></label>
-        {this.state.Q1 === 'yes' &&
-          <div>
-            <h3>Q2</h3>
-            <label>Are you sure?<input type='radio' checked={this.state.Q2 === "Are you sure?"} name='Q2' value='Are you sure?' onChange={this.handleChange} /></label>
-            <label>Wait, but why?<input type='radio' name='Q2' value='Wait, but why?' onChange={this.handleChange} /></label>
-          </div>
-        }
-        {this.state.Q1 === 'no' &&
-          <div>
-            <h3>Q3</h3>
-            <label>Nope<input type='radio' name='Q3' value='Nope' onChange={this.handleChange} /></label>
-            <label>Not at all<input type='radio' name='Q3' value='Not at all' onChange={this.handleChange} /></label>
-          </div>
-        } */}
         </form>
       </div>
     );
